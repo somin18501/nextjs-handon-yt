@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         port: "",
         protocol: "https",
       },
+      {
+        hostname: "quaint-panda-401.convex.cloud",
+        port: "",
+        protocol: "https",
+      },
     ],
   },
 };
