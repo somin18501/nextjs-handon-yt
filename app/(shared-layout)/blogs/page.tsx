@@ -4,12 +4,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 // import { api } from "@/convex/_generated/api";
 // import { useQuery } from "convex/react";
 // import { connection } from "next/server";
 import Image from "next/image";
 import Link from "next/link";
+import { connection } from "next/server";
 import React from "react";
 
 // export const dynamic = "force-static"; // NOTE: This is to prevent dynamic rendering
@@ -24,13 +24,13 @@ export const metadata: Metadata = {
 };
 
 const BlogList = async () => {
-  "use cache"; // NOTE: To allow caching of dynamic part of the page we need to use this directive
-  cacheLife("hours"); // NOTE: This is to cache the dynamic part for 1 hour, it is the way in next.js 16 cacheComponents
-  cacheTag("blog-list");
+  // "use cache"; // NOTE: To allow caching of dynamic part of the page we need to use this directive
+  // cacheLife("hours"); // NOTE: This is to cache the dynamic part for 1 hour, it is the way in next.js 16 cacheComponents
+  // cacheTag("blog-list");
 
   // NOTE: This is a done to allow fetching of data on server along with cache static part and wrap dynamic part in suspense.
   // This is done under (PPR) Partial Pre-rendering(next.js 15) which is a base of cacheComponents in next.js 16
-  // await connection();
+  await connection();
   // const data = useQuery(api.posts.getPosts); // NOTE: This is client side fetching and it's reactive
 
   const data = await fetchQuery(api.posts.getPosts); // NOTE: This is server side fetching but its not reactive i.e. it won't update when the data changes
